@@ -27,6 +27,10 @@ def load_data():
 # Load the data from the pickle file
 data = load_data()
 
+# Initialize session state for toggling display
+if "show_values" not in st.session_state:
+    st.session_state["show_values"] = False
+
 # Add custom CSS for alignment
 st.markdown(
     """
@@ -105,9 +109,13 @@ if st.button('Add Value'):
         st.error('Please enter a value to add.')
 st.markdown('</div>', unsafe_allow_html=True)
 
-# Display button to show the appended values of the selected option
+# Toggle button to display or hide values
 st.markdown('<div class="center-align">', unsafe_allow_html=True)
 if st.button('Display'):
+    st.session_state["show_values"] = not st.session_state["show_values"]
+
+# Display or hide the values based on session state
+if st.session_state["show_values"]:
     st.markdown('<div class="left-align">', unsafe_allow_html=True)
     st.write(f'Appended values in option {option}: {numbers}')
     st.markdown('</div>', unsafe_allow_html=True)
