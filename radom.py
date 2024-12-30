@@ -18,10 +18,10 @@ def load_data():
             return pickle.load(f)
     else:
         return {
-            "numbers_A": list(range(1, 2)),
-            "numbers_B": list(range(11, 12)),
-            "numbers_C": list(range(21, 22)),
-            "numbers_D": list(range(31, 32)),
+            "numbers_A": list(range(1, 11)),
+            "numbers_B": list(range(11, 21)),
+            "numbers_C": list(range(21, 31)),
+            "numbers_D": list(range(31, 41)),
         }
 
 # Load the data from the pickle file
@@ -61,17 +61,6 @@ elif option == 'C':
     numbers = data['numbers_C']
 else:
     numbers = data['numbers_D']
-
-# Show current numbers in the selected option
-st.markdown('<div class="left-align">', unsafe_allow_html=True)
-st.write(f'Current numbers in option {option}: {numbers}')
-st.markdown('</div>', unsafe_allow_html=True)
-
-# Display a random number from the selected list
-st.markdown('<div class="left-align">', unsafe_allow_html=True)
-random_number = random.choice(numbers)
-st.write(f'Random Number from option {option}: {random_number}')
-st.markdown('</div>', unsafe_allow_html=True)
 
 # Allow the user to add either a number or a string
 st.markdown('<div class="center-align">', unsafe_allow_html=True)
@@ -116,9 +105,10 @@ if st.button('Add Value'):
         st.error('Please enter a value to add.')
 st.markdown('</div>', unsafe_allow_html=True)
 
-# Refresh button to show a new random number from the selected list
+# Display button to show the appended values of the selected option
 st.markdown('<div class="center-align">', unsafe_allow_html=True)
-if st.button('Refresh'):
-    random_number = random.choice(numbers)
+if st.button('Display'):
+    st.markdown('<div class="left-align">', unsafe_allow_html=True)
+    st.write(f'Appended values in option {option}: {numbers}')
+    st.markdown('</div>', unsafe_allow_html=True)
 st.markdown('</div>', unsafe_allow_html=True)
-
