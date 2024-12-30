@@ -18,10 +18,10 @@ def load_data():
             return pickle.load(f)
     else:
         return {
-            "numbers_A": list(range(1, 11)),
-            "numbers_B": list(range(11, 21)),
-            "numbers_C": list(range(21, 31)),
-            "numbers_D": list(range(31, 41)),
+            "numbers_A": list(range(1, 2)),
+            "numbers_B": list(range(11, 12)),
+            "numbers_C": list(range(21, 22)),
+            "numbers_D": list(range(31, 32)),
         }
 
 # Load the data from the pickle file
@@ -29,7 +29,7 @@ data = load_data()
 
 # Ensure "Check" key exists in the data dictionary
 if "numbers_Check" not in data:
-    data["numbers_Check"] = list(range(41, 51))
+    data["numbers_Check"] = list(range(41, 42))
     save_data(data)  # Save the updated data to the pickle file
 
 # Initialize session state for toggling display and random number
