@@ -18,10 +18,10 @@ def load_data():
             return pickle.load(f)
     else:
         return {
-            "numbers_A": list(range(1, 11)),
-            "numbers_B": list(range(11, 21)),
-            "numbers_C": list(range(21, 31)),
-            "numbers_D": list(range(31, 41)),
+            "numbers_A": list(range(1, 2)),
+            "numbers_B": list(range(11, 12)),
+            "numbers_C": list(range(21, 22)),
+            "numbers_D": list(range(31, 32)),
         }
 
 # Load the data from the pickle file
@@ -64,7 +64,7 @@ else:
 
 # Show current numbers in the selected option
 st.markdown('<div class="left-align">', unsafe_allow_html=True)
-st.write(f'Current numbers in option {option}: {numbers}')
+# st.write(f'Current numbers in option {option}: {numbers}')
 st.markdown('</div>', unsafe_allow_html=True)
 
 # Display a random number from the selected list
