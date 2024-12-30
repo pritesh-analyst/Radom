@@ -22,11 +22,15 @@ def load_data():
             "numbers_B": list(range(11, 21)),
             "numbers_C": list(range(21, 31)),
             "numbers_D": list(range(31, 41)),
-            "numbers_Check": list(range(41, 51)),  # Add the Check option here
         }
 
 # Load the data from the pickle file
 data = load_data()
+
+# Ensure "Check" key exists in the data dictionary
+if "numbers_Check" not in data:
+    data["numbers_Check"] = list(range(41, 51))
+    save_data(data)  # Save the updated data to the pickle file
 
 # Initialize session state for toggling display and random number
 if "show_values" not in st.session_state:
@@ -79,36 +83,16 @@ st.markdown('</div>', unsafe_allow_html=True)
 # Add the value to the list if it's not already present
 st.markdown('<div class="center-align">', unsafe_allow_html=True)
 if st.button('Add Value'):
-    # Check if the input is not empty
     if input_value:
-        # Check if the input is a number (we try to convert it to a float)
         try:
-            new_value = float(input_value)  # Try to convert to a float
-            if new_value.is_integer():  # If it's an integer (whole number)
-                new_value = int(new_value)  # Convert to an integer
-            else:
-                new_value = float(new_value)  # Otherwise, leave it as a float
-
+            new_value = float(input_value)
+            new_value = int(new_value) if new_value.is_integer() else new_value
         except ValueError:
-            # If it's not a number, treat it as a string
             new_value = input_value
 
-        # Add the new value to the list (if it's not already in the list)
         if new_value not in numbers:
-            if option == 'A':
-                data['numbers_A'].append(new_value)
-            elif option == 'B':
-                data['numbers_B'].append(new_value)
-            elif option == 'C':
-                data['numbers_C'].append(new_value)
-            elif option == 'D':
-                data['numbers_D'].append(new_value)
-            elif option == 'Check':
-                data['numbers_Check'].append(new_value)
-
-            # Save the updated data to the pickle file
+            data[f"numbers_{option}"].append(new_value)
             save_data(data)
-
             st.success(f'Value "{new_value}" added to option {option}!')
         else:
             st.warning(f'Value "{new_value}" already exists in option {option}.')
