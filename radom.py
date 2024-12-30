@@ -22,6 +22,7 @@ def load_data():
             "numbers_B": list(range(11, 21)),
             "numbers_C": list(range(21, 31)),
             "numbers_D": list(range(31, 41)),
+            "numbers_Check": list(range(41, 51)),  # Add the Check option here
         }
 
 # Load the data from the pickle file
@@ -53,9 +54,9 @@ st.markdown(
 # Title of the app
 st.title('Random Number Generator and Addition')
 
-# Create a dropdown to select option A, B, C, or D
+# Create a dropdown to select option A, B, C, D, or Check
 st.markdown('<div class="center-align">', unsafe_allow_html=True)
-option = st.selectbox('Choose an option', ['A', 'B', 'C', 'D'])
+option = st.selectbox('Choose an option', ['A', 'B', 'C', 'D', 'Check'])
 st.markdown('</div>', unsafe_allow_html=True)
 
 # Display the current numbers in the selected option
@@ -65,8 +66,10 @@ elif option == 'B':
     numbers = data['numbers_B']
 elif option == 'C':
     numbers = data['numbers_C']
-else:
+elif option == 'D':
     numbers = data['numbers_D']
+else:  # For Check option
+    numbers = data['numbers_Check']
 
 # Allow the user to add either a number or a string
 st.markdown('<div class="center-align">', unsafe_allow_html=True)
@@ -98,8 +101,10 @@ if st.button('Add Value'):
                 data['numbers_B'].append(new_value)
             elif option == 'C':
                 data['numbers_C'].append(new_value)
-            else:
+            elif option == 'D':
                 data['numbers_D'].append(new_value)
+            elif option == 'Check':
+                data['numbers_Check'].append(new_value)
 
             # Save the updated data to the pickle file
             save_data(data)
@@ -126,3 +131,10 @@ if st.session_state["show_values"]:
 if st.button('Refresh'):
     st.session_state["random_number"] = random.choice(numbers)
     st.success(f'New Random Number: {st.session_state["random_number"]}')
+
+# Delete button for the "Check" option
+if option == "Check":
+    if st.button("Delete"):
+        data["numbers_Check"] = list(range(41, 51))  # Reset to the initial list
+        save_data(data)  # Save changes to the pickle file
+        st.success("All appended values have been deleted from option 'Check'!")
