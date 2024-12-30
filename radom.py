@@ -64,7 +64,7 @@ else:
 
 # Show current numbers in the selected option
 st.markdown('<div class="left-align">', unsafe_allow_html=True)
-# st.write(f'Current numbers in option {option}: {numbers}')
+st.write(f'Current numbers in option {option}: {numbers}')
 st.markdown('</div>', unsafe_allow_html=True)
 
 # Display a random number from the selected list
