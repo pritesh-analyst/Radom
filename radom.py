@@ -27,9 +27,11 @@ def load_data():
 # Load the data from the pickle file
 data = load_data()
 
-# Initialize session state for toggling display
+# Initialize session state for toggling display and random number
 if "show_values" not in st.session_state:
     st.session_state["show_values"] = False
+if "random_number" not in st.session_state:
+    st.session_state["random_number"] = None
 
 # Add custom CSS for alignment
 st.markdown(
@@ -119,4 +121,8 @@ if st.session_state["show_values"]:
     st.markdown('<div class="left-align">', unsafe_allow_html=True)
     st.write(f'Appended values in option {option}: {numbers}')
     st.markdown('</div>', unsafe_allow_html=True)
-st.markdown('</div>', unsafe_allow_html=True)
+
+# Refresh button to generate a new random number
+if st.button('Refresh'):
+    st.session_state["random_number"] = random.choice(numbers)
+    st.success(f'New Random Number: {st.session_state["random_number"]}')
