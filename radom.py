@@ -120,13 +120,13 @@ if option == "Check":
         st.success("All appended values have been deleted from option 'Check'!")
 
 # Reset All button to clear all dictionaries
-if st.button("Reset All"):
-    data = {
-        "numbers_A": [],
-        "numbers_B": [],
-        "numbers_C": [],
-        "numbers_D": [],
-        "numbers_Check": [],
-    }
-    save_data(data)
-    st.success("All dictionaries have been reset to empty!")
+# if st.button("Reset All"):
+#     data = {
+#         "numbers_A": [],
+#         "numbers_B": [],
+#         "numbers_C": [],
+#         "numbers_D": [],
+#         "numbers_Check": [],
+#     }
+#     save_data(data)
+#     st.success("All dictionaries have been reset to empty!")
