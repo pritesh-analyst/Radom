@@ -18,19 +18,15 @@ def load_data():
             return pickle.load(f)
     else:
         return {
-            "numbers_A": list(range(1, 2)),
-            "numbers_B": list(range(11, 12)),
-            "numbers_C": list(range(21, 22)),
-            "numbers_D": list(range(31, 32)),
+            "numbers_A": [],
+            "numbers_B": [],
+            "numbers_C": [],
+            "numbers_D": [],
+            "numbers_Check": [],
         }
 
 # Load the data from the pickle file
 data = load_data()
-
-# Ensure "Check" key exists in the data dictionary
-if "numbers_Check" not in data:
-    data["numbers_Check"] = list(range(41, 42))
-    save_data(data)  # Save the updated data to the pickle file
 
 # Initialize session state for toggling display and random number
 if "show_values" not in st.session_state:
@@ -119,6 +115,18 @@ if st.button('Refresh'):
 # Delete button for the "Check" option
 if option == "Check":
     if st.button("Delete"):
-        data["numbers_Check"] = list(range(41, 51))  # Reset to the initial list
-        save_data(data)  # Save changes to the pickle file
+        data["numbers_Check"] = []
+        save_data(data)
         st.success("All appended values have been deleted from option 'Check'!")
+
+# Reset All button to clear all dictionaries
+if st.button("Reset All"):
+    data = {
+        "numbers_A": [],
+        "numbers_B": [],
+        "numbers_C": [],
+        "numbers_D": [],
+        "numbers_Check": [],
+    }
+    save_data(data)
+    st.success("All dictionaries have been reset to empty!")
