@@ -1,22 +1,24 @@
+from github import Github
+import json
 import streamlit as st
-import random
-import pickle
-import os
 
-# Filepath for the pickle file
-PICKLE_FILE = "numbers_data.pkl"
+# GitHub Configuration
+GITHUB_TOKEN = "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"
+REPO_NAME = "pritesh-analyst/Radom"
+FILE_PATH = "data.json"
 
-# Function to save data to a pickle file
-def save_data(data):
-    with open(PICKLE_FILE, "wb") as f:
-        pickle.dump(data, f)
+# Initialize GitHub client
+g = Github(GITHUB_TOKEN)
+repo = g.get_repo(REPO_NAME)
 
-# Function to load data from a pickle file
-def load_data():
-    if os.path.exists(PICKLE_FILE):
-        with open(PICKLE_FILE, "rb") as f:
-            return pickle.load(f)
-    else:
+# Load data from GitHub
+def load_data_from_github():
+    try:
+        file = repo.get_contents(FILE_PATH)
+        data = json.loads(file.decoded_content.decode("utf-8"))
+        return data
+    except Exception as e:
+        st.error(f"Error loading data from GitHub: {e}")
         return {
             "numbers_A": [],
             "numbers_B": [],
@@ -25,16 +27,26 @@ def load_data():
             "numbers_Check": [],
         }
 
-# Load the data from the pickle file
-data = load_data()
+# Save data to GitHub
+def save_data_to_github(data):
+    try:
+        file = repo.get_contents(FILE_PATH)
+        repo.update_file(
+            file.path,
+            "Update numbers data",
+            json.dumps(data, indent=4),
+            file.sha,
+        )
+        st.success("Data successfully saved to GitHub!")
+    except Exception as e:
+        st.error(f"Error saving data to GitHub: {e}")
 
-# Initialize session state for toggling display and random number
-if "show_values" not in st.session_state:
-    st.session_state["show_values"] = False
-if "random_number" not in st.session_state:
-    st.session_state["random_number"] = None
+# Initialize or load data
+data = load_data_from_github()
 
-# Add custom CSS for alignment
+# Example for adding a value (similar logic to before)
+if st.button("Save Data"):
+    save_data_to_github(data)# Add custom CSS for alignment
 st.markdown(
     """
     <style>
